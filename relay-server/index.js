@@ -2,8 +2,10 @@ const Stream = require('node-rtsp-stream')
 const readline = require('readline');
 const prompt = require('prompt');
 
+const staticServer = require('./staticServer')
 
-
+staticServer.listen(1337, '127.0.0.1');
+console.log('Server running at http://127.0.0.1:1337/');
 
 const schema = {
   properties: {
@@ -35,7 +37,7 @@ prompt.get(schema, (err, result) => {
     ffmpegOptions: {
       '-stats': '',
       '-r': 30,
-      '-s': '720x480',
+      '-s': '1440x900',
       // '': '',
     }
   })
