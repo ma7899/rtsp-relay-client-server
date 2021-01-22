@@ -19,6 +19,11 @@ const schema = {
       default: 9999,
       type: 'integer',
     },
+    quality: {
+      message: 'select stream quality: (<=1 : low , 2 : medium , >=3 : high) ',
+      default: 2,
+      type: 'integer',
+    },
   }
 }
 
@@ -28,7 +33,11 @@ prompt.get(schema, (err, result) => {
   }
   console.info(result);
 
-  const {rtspStreamUrl, websocketPort} = result;
+  const {rtspStreamUrl, websocketPort, quality} = result;
+
+  let size = '1024x640';
+  if (quality <= 1) size = '800x500';
+  if (quality >= 3) size = '1440x900';
 
   stream = new Stream({
     name: 'name_f',

@@ -19,11 +19,6 @@ controlButton.onclick = () => {
     canvas.style.width = '600px';
     var url = 'ws://localhost:9999/';
     player = new JSMpeg.Player(url, {canvas: canvas});
-    player.source.onEstablishedCallback = () => {
-      messageBox.textContent = 'Websocket server connection established.';
-      isConnectionEstablished = true;
-      console.log('ssss');
-    };
     window.canvasPlayer = player;
     controlButton.innerHTML = pauseIcon;
   }
@@ -37,5 +32,16 @@ controlButton.onclick = () => {
       controlButton.innerHTML = pauseIcon;
     }
   }
-  
 }
+
+setInterval(() => {
+  if (player) {
+    if (player.source.established) {
+      messageBox.textContent = 'Websocket server connection established.';
+      isConnectionEstablished = true;      
+    } else {
+      messageBox.textContent = 'Connecting...';
+      isConnectionEstablished = false;
+    }
+  }
+}, 1000);
